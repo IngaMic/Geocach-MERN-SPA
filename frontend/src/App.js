@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import {
     BrowserRouter as Router,
     Route,
@@ -13,24 +13,72 @@ import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./user/pages/Auth";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
+import { useAuth } from "./shared/hooks/auth-hook";
+
+// let logoutTimer;
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userId, setUserId] = useState(null);
+    // const [token, setToken] = useState(null);
+    // const [tokenExpirationDate, setTokenExpirationDate] = useState();
+    // const [userId, setUserId] = useState(null);
 
-    const login = useCallback((uid) => {
-        setIsLoggedIn(true);
-        setUserId(uid);
-    }, []);
+    // const login = useCallback((uid, token, expirationDate) => {
+    //     setToken(token);
+    //     setUserId(uid);
+    //     //token expires in an hour:
+    //     const tokenExpirationD =
+    //         expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    //     setTokenExpirationDate(tokenExpirationD);
+    //     //to keep login after page reloads
+    //     localStorage.setItem(
+    //         "userData",
+    //         JSON.stringify({
+    //             userId: uid,
+    //             token: token,
+    //             expiration: tokenExpirationD.toISOString(),
+    //         })
+    //     );
+    // }, []);
 
-    const logout = useCallback(() => {
-        setIsLoggedIn(false);
-        setUserId(null);
-    }, []);
+    // const logout = useCallback(() => {
+    //     setToken(null);
+    //     setTokenExpirationDate(null);
+    //     setUserId(null);
+    //     localStorage.removeItem("userData");
+    // }, []);
+
+    // useEffect(() => {
+    //     //handling sing-in case, logout after token expires:
+    //     if (token && tokenExpirationDate) {
+    //         //to get a time in milliseconds:
+    //         const remainingTime =
+    //             tokenExpirationDate.getTime() - new Date().getTime();
+    //         logoutTimer = setTimeout(logout, remainingTime);
+    //     } else {
+    //         clearTimeout(logoutTimer);
+    //     }
+    // }, [token, logout, tokenExpirationDate]);
+
+    // useEffect(() => {
+    //     const storedData = JSON.parse(localStorage.getItem("userData"));
+    //     if (
+    //         storedData &&
+    //         storedData.token &&
+    //         new Date(storedData.expiration) > new Date()
+    //     ) {
+    //         login(
+    //             storedData.userId,
+    //             storedData.token,
+    //             new Date(storedData.expiration)
+    //         );
+    //     }
+    // }, [login]);
+
+    const { token, login, logout, userId } = useAuth();
 
     let routes;
 
-    if (isLoggedIn) {
+    if (token) {
         routes = (
             <Switch>
                 <Route path="/" exact>
@@ -68,7 +116,8 @@ const App = () => {
     return (
         <AuthContext.Provider
             value={{
-                isLoggedIn: isLoggedIn,
+                isLoggedIn: !!token,
+                token: token,
                 userId: userId,
                 login: login,
                 logout: logout,

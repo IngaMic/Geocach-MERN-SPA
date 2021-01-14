@@ -65,7 +65,7 @@ const ImageUpload = (props) => {
                     PICK IMAGE
                 </Button>
             </div>
-            {!isValid && <p>{props.errorText}</p>}
+            {/* {!isValid && <p>{props.errorText}</p>} */}
         </div>
     );
 };
