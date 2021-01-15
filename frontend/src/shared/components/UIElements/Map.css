@@ -1,4 +1,12 @@
 .map {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
+}
+#marker {
+    background-image: url("https://www.pinclipart.com/picdir/middle/447-4478350_png-file-svg-fa-map-marker-png-clipart.png");
+    background-size: cover;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
 }
