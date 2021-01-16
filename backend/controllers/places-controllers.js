@@ -34,6 +34,25 @@ const getPlaceById = async (req, res, next) => {
     res.json({ place: place.toObject({ getters: true }) });
 };
 
+const getAllPlaces = async (req, res, next) => {
+    let places;
+    try {
+        places = await Place.find();
+    } catch (err) {
+        return next(
+            new HttpError("Something went wrong, could not find places.", 500)
+        );
+    }
+    if (!places) {
+        return next(
+            new HttpError("Something went wrong, could not find places.", 500)
+        );
+    }
+    res.json({
+        places: places.map((place) => place.toObject({ getters: true })),
+    });
+};
+
 const getPlacesByUserId = async (req, res, next) => {
     const userId = req.params.uid;
     //there could be an alternative with populate method:
@@ -248,6 +267,7 @@ const deletePlace = async (req, res, next) => {
 };
 
 exports.getPlaceById = getPlaceById;
+exports.getAllPlaces = getAllPlaces;
 exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;

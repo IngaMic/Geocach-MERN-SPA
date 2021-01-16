@@ -1,14 +1,11 @@
 const axios = require("axios");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-// const mapBoxToken = process.env.MAPBOX_TOKEN;
+const { MAP_KEY } = require("../secrets.json");
 const geoCoder = mbxGeocoding({
-    accessToken:
-        "pk.eyJ1IjoiZGFuaWVsbXVycGh5IiwiYSI6ImNranR2MXljcTA5MHIyd281cTFrMjF0YmYifQ.-QXpFJdrgYchVUxbdAF8Aw",
+    accessToken: MAP_KEY,
 });
 
 const HttpError = require("../models/http-error");
-
-const API_KEY = "thisIsSuperSecret";
 
 async function getCoordsForAddress(address) {
     // return {
@@ -30,10 +27,9 @@ async function getCoordsForAddress(address) {
         throw error;
     } else {
         const location = cd.body.features[0].geometry.coordinates;
-        console.log("location location : ", location);
 
         const coordinates = { lat: location[1], lng: location[0] }; // location = [lng, lat]
-        console.log("coordinates from location : ", coordinates);
+
         return coordinates;
     }
 }

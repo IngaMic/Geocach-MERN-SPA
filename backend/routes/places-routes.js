@@ -7,11 +7,13 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
+router.get("/all", placesControllers.getAllPlaces);
+
 router.get("/:pid", placesControllers.getPlaceById);
 
 router.get("/user/:uid", placesControllers.getPlacesByUserId);
 
-//two get requests up are available for everyone, token here:
+//three get requests up are available for everyone, token here:
 router.use(checkAuth);
 
 router.post(

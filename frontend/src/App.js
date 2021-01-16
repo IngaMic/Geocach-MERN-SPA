@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Users from "./user/pages/Users";
+import ClusterMap from "./places/pages/ClusterMap";
 import NewPlace from "./places/pages/NewPlace";
 import UserPlaces from "./places/pages/UserPlaces";
 import UpdatePlace from "./places/pages/UpdatePlace";
@@ -15,65 +16,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 
-// let logoutTimer;
-
 const App = () => {
-    // const [token, setToken] = useState(null);
-    // const [tokenExpirationDate, setTokenExpirationDate] = useState();
-    // const [userId, setUserId] = useState(null);
-
-    // const login = useCallback((uid, token, expirationDate) => {
-    //     setToken(token);
-    //     setUserId(uid);
-    //     //token expires in an hour:
-    //     const tokenExpirationD =
-    //         expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-    //     setTokenExpirationDate(tokenExpirationD);
-    //     //to keep login after page reloads
-    //     localStorage.setItem(
-    //         "userData",
-    //         JSON.stringify({
-    //             userId: uid,
-    //             token: token,
-    //             expiration: tokenExpirationD.toISOString(),
-    //         })
-    //     );
-    // }, []);
-
-    // const logout = useCallback(() => {
-    //     setToken(null);
-    //     setTokenExpirationDate(null);
-    //     setUserId(null);
-    //     localStorage.removeItem("userData");
-    // }, []);
-
-    // useEffect(() => {
-    //     //handling sing-in case, logout after token expires:
-    //     if (token && tokenExpirationDate) {
-    //         //to get a time in milliseconds:
-    //         const remainingTime =
-    //             tokenExpirationDate.getTime() - new Date().getTime();
-    //         logoutTimer = setTimeout(logout, remainingTime);
-    //     } else {
-    //         clearTimeout(logoutTimer);
-    //     }
-    // }, [token, logout, tokenExpirationDate]);
-
-    // useEffect(() => {
-    //     const storedData = JSON.parse(localStorage.getItem("userData"));
-    //     if (
-    //         storedData &&
-    //         storedData.token &&
-    //         new Date(storedData.expiration) > new Date()
-    //     ) {
-    //         login(
-    //             storedData.userId,
-    //             storedData.token,
-    //             new Date(storedData.expiration)
-    //         );
-    //     }
-    // }, [login]);
-
     const { token, login, logout, userId } = useAuth();
 
     let routes;
@@ -102,12 +45,17 @@ const App = () => {
                 <Route path="/" exact>
                     <Users />
                 </Route>
+
                 <Route path="/:userId/places" exact>
                     <UserPlaces />
                 </Route>
-                <Route path="/auth">
+                <Route path="/all" exact>
+                    <ClusterMap />
+                </Route>
+                <Route path="/auth" exact>
                     <Auth />
                 </Route>
+
                 <Redirect to="/auth" />
             </Switch>
         );
