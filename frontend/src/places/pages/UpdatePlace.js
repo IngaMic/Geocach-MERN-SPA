@@ -13,6 +13,7 @@ import {
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import { REACT_APP_BACKEND_URL } from "../../secrets.json";
 import "./PlaceForm.css";
 
 const UpdatePlace = () => {
@@ -40,7 +41,7 @@ const UpdatePlace = () => {
         const fetchPlace = async () => {
             try {
                 const responseData = await sendRequest(
-                    `http://localhost:5000/api/places/${placeId}`
+                    REACT_APP_BACKEND_URL + `/places/${placeId}`
                 );
                 setLoadedPlace(responseData.place);
                 setFormData(
@@ -66,7 +67,7 @@ const UpdatePlace = () => {
         // console.log(formState.inputs);
         try {
             await sendRequest(
-                `http://localhost:5000/api/places/${placeId}`,
+                REACT_APP_BACKEND_URL + `/places/${placeId}`,
                 "PATCH",
                 JSON.stringify({
                     title: formState.inputs.title.value,

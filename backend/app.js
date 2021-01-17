@@ -9,6 +9,7 @@ const usersRoutes = require("./routes/users-routes");
 const HttpError = require("./models/http-error");
 
 const app = express();
+const { DB_USER, DB_PSW, DB_NAME } = require("./secrets.json");
 
 app.use(bodyParser.json());
 
@@ -46,14 +47,10 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || "An unknown error occurred!" });
 });
 
-//solution to using sessions: "?retryWrites=false"
 mongoose
-    .connect("mongodb://localhost:27017/places", {
-        retryWrites: false,
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-    })
+    .connect(
+        `mongodb+srv://${DB_USER}:${DB_PSW}@cluster0.qdemx.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    )
     .then(() => {
         app.listen(5000, () => {
             console.log("listening 5000");

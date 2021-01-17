@@ -13,6 +13,7 @@ import {
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import { REACT_APP_BACKEND_URL } from "../../secrets.json";
 import "./PlaceForm.css";
 
 const NewPlace = () => {
@@ -52,7 +53,7 @@ const NewPlace = () => {
             formData.append("address", formState.inputs.address.value);
             formData.append("image", formState.inputs.image.value);
             await sendRequest(
-                "http://localhost:5000/api/places",
+                REACT_APP_BACKEND_URL + "/places",
                 "POST",
                 formData,
                 {

@@ -15,9 +15,6 @@ const ImageUpload = (props) => {
         if (!file) {
             return;
         }
-        //Browser has a default FileReader api
-        //FileReader does not work with callbacks, doen't give a promise
-
         const fileReader = new FileReader();
         fileReader.onload = () => {
             setPreviewUrl(fileReader.result);
@@ -26,18 +23,16 @@ const ImageUpload = (props) => {
     }, [file]);
 
     const pickedHandler = (event) => {
-        //console.log("event.target", event.target);
-        //there's default property event.target.files
         let pickedFile;
         let fileIsValid = isValid; //managing timing of isValid change, needs to be set manualy
         if (event.target.files && event.target.files.length === 1) {
             pickedFile = event.target.files[0];
             setFile(pickedFile);
             setIsValid(true);
-            fileIsValid = true; //manual handling
+            fileIsValid = true;
         } else {
             setIsValid(false);
-            fileIsValid = false; //manual handling
+            fileIsValid = false;
         }
         props.onInput(props.id, pickedFile, fileIsValid);
     };

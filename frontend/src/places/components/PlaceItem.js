@@ -8,6 +8,7 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { REACT_APP_BACKEND_URL, REACT_APP_ASSET_URL } from "../../secrets.json";
 import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
@@ -30,10 +31,10 @@ const PlaceItem = (props) => {
 
     const confirmDeleteHandler = async () => {
         setShowConfirmModal(false);
-        //console.log('DELETING...');
+
         try {
             await sendRequest(
-                `http://localhost:5000/api/places/${props.id}`,
+                REACT_APP_BACKEND_URL + `/places/${props.id}`,
                 "DELETE",
                 null,
                 {
@@ -85,7 +86,7 @@ const PlaceItem = (props) => {
                     {isLoading && <LoadingSpinner asOverlay />}
                     <div className="place-item__image">
                         <img
-                            src={`http://localhost:5000/${props.image}`}
+                            src={`${REACT_APP_ASSET_URL}/${props.image}`}
                             alt={props.title}
                         />
                     </div>

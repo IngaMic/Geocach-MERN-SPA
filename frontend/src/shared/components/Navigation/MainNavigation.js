@@ -37,15 +37,7 @@ const MainNavigation = (props) => {
                     <span />
                 </button>
                 <h1 className="main-navigation__title">
-                    <Link to="/">
-                        <img
-                            src={
-                                "https://freesvg.org/img/Geocaching-2015030229.png"
-                            }
-                            height={"28px"}
-                        />
-                        Geocachers
-                    </Link>
+                    <Link to="/">Geocachers</Link>
                 </h1>
                 <nav className="main-navigation__header-nav">
                     <NavLinks />

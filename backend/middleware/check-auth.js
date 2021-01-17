@@ -1,5 +1,6 @@
 const HttpError = require("../models/http-error");
 const jwt = require("jsonwebtoken");
+const { WEB_TOKEN } = require("../secrets.json");
 
 module.exports = (req, res, next) => {
     //browser behaviour handling with "OPTIONS"header before any other than GET
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
         if (!token) {
             throw new Error("Authentication failed");
         } else {
-            const decodedToken = jwt.verify(token, "supersecret_dont_share"); //validating the token
+            const decodedToken = jwt.verify(token, WEB_TOKEN); //validating the token
             req.userData = {
                 userId: decodedToken.userId, //adding Data to this req
             };
